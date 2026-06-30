@@ -344,39 +344,6 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
 
       </div>
 
-      {/* RECENT REALTIME ACTIVITIES LOG */}
-      <div className="p-6 rounded-3xl bg-zinc-900/30 border border-zinc-850">
-        <h3 className="text-xs font-black uppercase tracking-widest text-zinc-400 mb-4">Recent Tap Activity Streams</h3>
-        <div className="space-y-3.5">
-          {recentActivities.length === 0 ? (
-            <p className="text-xs text-zinc-600 text-center py-6">No recent tap events logged today.</p>
-          ) : (
-            recentActivities.map((activity, idx) => (
-              <div key={`activity-${activity.id || idx}`} className="flex items-center justify-between p-3.5 rounded-xl bg-zinc-950/40 border border-zinc-900/60">
-                <div className="flex items-center gap-3">
-                  <div className={`p-2 rounded-lg ${activity.tapOutTime ? 'bg-zinc-900 text-red-500' : 'bg-red-600/10 text-red-500 animate-pulse'}`}>
-                    {activity.tapOutTime ? <CheckCircle2 className="w-4.5 h-4.5" /> : <Play className="w-4.5 h-4.5 fill-current" />}
-                  </div>
-                  <div>
-                    <span className="text-xs font-black text-white block">{activity.userName}</span>
-                    <span className="text-[10px] text-zinc-500 mt-0.5 block">
-                      {activity.userDepartment} • {activity.userEmployeeId}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="text-right">
-                  <span className="text-xs font-mono font-bold text-zinc-300 block">
-                    {activity.tapOutTime ? `Out: ${formatTime(activity.tapOutTime)}` : `In: ${formatTime(activity.tapInTime)}`}
-                  </span>
-                  <span className="text-[9px] text-zinc-500 font-mono block mt-1">{formatDatePretty(activity.date)}</span>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-      </div>
-
     </div>
   );
 }

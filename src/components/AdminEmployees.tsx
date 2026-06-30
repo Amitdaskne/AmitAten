@@ -607,14 +607,16 @@ export default function AdminEmployees() {
 
                 {/* Office site location */}
                 <div>
-                  <label className="block text-[10px] font-bold text-zinc-400 uppercase tracking-wide mb-1.5">Office Site Site</label>
-                  <input
-                    type="text"
+                  <label className="block text-[10px] font-bold text-zinc-400 uppercase tracking-wide mb-1.5">Office Location</label>
+                  <select
                     value={formData.officeLocation}
                     onChange={(e) => setFormData(prev => ({ ...prev, officeLocation: e.target.value }))}
-                    className="w-full px-3.5 py-2.5 bg-black/30 border border-zinc-800 rounded-xl text-xs text-white focus:outline-none focus:border-red-600"
-                    placeholder="Headquarters"
-                  />
+                    className="w-full px-3.5 py-2.5 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-white focus:outline-none focus:border-red-600 appearance-none cursor-pointer"
+                  >
+                    <option value="Store 1" className="bg-zinc-900 text-white">Store 1</option>
+                    <option value="Store 2" className="bg-zinc-900 text-white">Store 2</option>
+                    <option value="Store 3" className="bg-zinc-900 text-white">Store 3</option>
+                  </select>
                 </div>
               </div>
 

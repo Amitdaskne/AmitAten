@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { User, CompanySettings } from '../types';
-import { QRCodeCanvas } from 'qrcode.react';
+import { QRCodeSVG } from 'qrcode.react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import { Download, Printer, Shield, Phone, MapPin, Info } from 'lucide-react';
@@ -107,7 +107,7 @@ export default function UserIdCard({ user, settings }: UserIdCardProps) {
     const originalAlignItems = el.style.alignItems;
     const originalPadding = el.style.padding;
 
-    // Enforce horizontal side-by-side layout of exactly 616px width and 472px height
+    // Enforce horizontal side-by-side layout of exactly 616px width and 482px height
     el.style.width = '616px';
     el.style.minWidth = '616px';
     el.style.flexDirection = 'row';
@@ -122,7 +122,7 @@ export default function UserIdCard({ user, settings }: UserIdCardProps) {
         backgroundColor: '#0c0c0e',
         logging: false,
         width: 616,
-        height: 472,
+        height: 482,
         windowWidth: 1200 // Prevent media queries or viewports from shrinking layout
       });
       return canvas;
@@ -231,7 +231,7 @@ export default function UserIdCard({ user, settings }: UserIdCardProps) {
       <div ref={cardRef} className="print-area flex flex-col md:flex-row gap-6 p-4 rounded-3xl justify-center items-center w-full" style={{ backgroundColor: '#0C0C0E', border: '1px solid #27272a' }}>
         
         {/* FRONT SIDE */}
-        <div className="relative w-[280px] h-[440px] rounded-2xl p-5 flex flex-col items-center justify-between shadow-lg overflow-hidden select-none" style={{ background: 'linear-gradient(to bottom, #18181b, #000000)', border: '1px solid #27272a' }}>
+        <div className="relative w-[280px] h-[450px] rounded-2xl p-4 flex flex-col items-center justify-between shadow-lg overflow-hidden select-none" style={{ background: 'linear-gradient(to bottom, #18181b, #000000)', border: '1px solid #27272a' }}>
           {/* Top aesthetic red bar */}
           <div className="absolute top-0 inset-x-0 h-1.5" style={{ backgroundColor: '#dc2626' }} />
           <div className="absolute -top-16 -left-16 w-32 h-32 rounded-full blur-2xl pointer-events-none" style={{ backgroundColor: 'rgba(220, 38, 38, 0.1)' }} />
@@ -252,7 +252,7 @@ export default function UserIdCard({ user, settings }: UserIdCardProps) {
           </div>
 
           {/* User Photo */}
-          <div className="relative my-4 flex justify-center">
+          <div className="relative my-3 flex justify-center">
             <div className="absolute inset-0 rounded-full blur-md pointer-events-none animate-pulse" style={{ backgroundColor: 'rgba(220, 38, 38, 0.2)' }} />
             {user.photoUrl ? (
               <img
@@ -260,11 +260,11 @@ export default function UserIdCard({ user, settings }: UserIdCardProps) {
                 crossOrigin="anonymous"
                 referrerPolicy="no-referrer"
                 alt={user.name}
-                className="w-28 h-28 rounded-full object-cover shadow-xl relative z-10"
+                className="w-24 h-24 rounded-full object-cover shadow-xl relative z-10"
                 style={{ border: '2px solid #dc2626' }}
               />
             ) : (
-              <div className="w-28 h-28 rounded-full flex items-center justify-center font-black text-3xl relative z-10" style={{ backgroundColor: '#27272a', border: '2px solid #dc2626', color: '#a1a1aa' }}>
+              <div className="w-24 h-24 rounded-full flex items-center justify-center font-black text-2xl relative z-10" style={{ backgroundColor: '#27272a', border: '2px solid #dc2626', color: '#a1a1aa' }}>
                 {(user.name || '').split(' ').map(n => n?.[0] || '').join('')}
               </div>
             )}
@@ -273,9 +273,9 @@ export default function UserIdCard({ user, settings }: UserIdCardProps) {
           {/* Info Block */}
           <div className="text-center w-full">
             <h2 className="text-base font-extrabold text-white tracking-tight mb-0.5">{user.name}</h2>
-            <p className="text-xs font-bold tracking-wide uppercase mb-3" style={{ color: '#ef4444' }}>{user.department}</p>
+            <p className="text-xs font-bold tracking-wide uppercase mb-2.5" style={{ color: '#ef4444' }}>{user.department}</p>
 
-            <div className="grid grid-cols-2 gap-y-2 gap-x-2 text-left p-3 rounded-xl" style={{ backgroundColor: 'rgba(9, 9, 11, 0.8)', border: '1px solid #27272a' }}>
+            <div className="grid grid-cols-2 gap-y-1.5 gap-x-2 text-left p-2.5 rounded-xl" style={{ backgroundColor: 'rgba(9, 9, 11, 0.8)', border: '1px solid #27272a' }}>
               <div>
                 <span className="block text-[8px] font-bold uppercase tracking-wider" style={{ color: '#71717a' }}>Employee ID</span>
                 <span className="text-[11px] font-mono font-bold text-white">{user.employeeId}</span>
@@ -296,22 +296,23 @@ export default function UserIdCard({ user, settings }: UserIdCardProps) {
           </div>
 
           {/* QR Code container */}
-          <div className="mt-3 flex items-center justify-between w-full pt-2.5" style={{ borderTop: '1px solid #27272a' }}>
+          <div className="mt-auto flex items-center justify-between w-full pt-2" style={{ borderTop: '1px solid #27272a' }}>
             <div className="text-left">
               <span className="block text-[7px] uppercase font-bold tracking-widest" style={{ color: '#71717a' }}>Badge Status</span>
-              <span className="text-[9px] font-extrabold uppercase flex items-center gap-1" style={{ color: '#34d399' }}>
+              <span className="text-[9px] font-extrabold uppercase flex items-center gap-1 mb-1" style={{ color: '#34d399' }}>
                 <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: '#10b981' }} />
                 Active
               </span>
+              <span className="block text-[7px] uppercase font-bold tracking-wider" style={{ color: '#ef4444' }}>Scan to Verify</span>
             </div>
-            <div className="bg-white p-1 rounded-md shadow-lg flex items-center justify-center" style={{ border: '1px solid #27272a' }}>
-              <QRCodeCanvas value={user.qrCodeData || user.id} size={36} bgColor="#FFFFFF" fgColor="#000000" level="H" />
+            <div className="bg-white p-1 rounded-lg shadow-lg flex items-center justify-center border-2 border-red-600 shrink-0" style={{ boxShadow: '0 4px 14px rgba(220, 38, 38, 0.15)' }}>
+              <QRCodeSVG value={user.qrCodeData || user.id} size={52} bgColor="#FFFFFF" fgColor="#000000" level="H" />
             </div>
           </div>
         </div>
 
         {/* BACK SIDE */}
-        <div className="relative w-[280px] h-[440px] rounded-2xl p-5 flex flex-col items-center justify-between shadow-lg overflow-hidden select-none" style={{ background: 'linear-gradient(to bottom, #18181b, #000000)', border: '1px solid #27272a' }}>
+        <div className="relative w-[280px] h-[450px] rounded-2xl p-4 flex flex-col items-center justify-between shadow-lg overflow-hidden select-none" style={{ background: 'linear-gradient(to bottom, #18181b, #000000)', border: '1px solid #27272a' }}>
           <div className="absolute top-0 inset-x-0 h-1.5" style={{ backgroundColor: '#27272a' }} />
 
           {/* Back side branding */}
@@ -321,7 +322,7 @@ export default function UserIdCard({ user, settings }: UserIdCardProps) {
           </div>
 
           {/* Back Info details */}
-          <div className="w-full space-y-4 my-auto">
+          <div className="w-full space-y-3.5 my-auto">
             {/* Contact details */}
             <div className="space-y-2 p-3 rounded-xl" style={{ backgroundColor: 'rgba(9, 9, 11, 0.6)', border: '1px solid #27272a' }}>
               <div className="flex gap-2 items-start text-left">
@@ -357,7 +358,7 @@ export default function UserIdCard({ user, settings }: UserIdCardProps) {
           </div>
 
           {/* Barcode/Footer */}
-          <div className="w-full flex flex-col items-center gap-1 pt-3" style={{ borderTop: '1px solid #27272a' }}>
+          <div className="w-full flex flex-col items-center gap-1 pt-3 mt-auto" style={{ borderTop: '1px solid #27272a' }}>
             <div className="bg-white px-2 py-1.5 rounded flex flex-col items-center justify-center w-full" style={{ border: '1px solid #27272a' }}>
               {/* Styled CSS Barcode */}
               <div className="flex justify-between items-center h-5 w-full bg-zinc-100 px-1 opacity-90 select-none">
