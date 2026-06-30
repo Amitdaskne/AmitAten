@@ -1,0 +1,6 @@
+{
+  "name": "AmitAten",
+  "description": "AmitAten is a professional Optical Store Attendance Management System customized for Store 1, Store 2, and Store 3, with specialized roles including Sales Executive, Manager, Technician, and Office Attendant.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
