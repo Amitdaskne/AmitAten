@@ -468,6 +468,21 @@ export default function Login() {
       </div>
 
       {/* App Credentials Helper Hint for immediate, out-of-the-box usage */}
-      
+      <div className="mt-8 text-center max-w-sm z-10 px-4 bg-zinc-950/60 py-3.5 rounded-2xl border border-zinc-900">
+        <h4 className="text-xs font-extrabold tracking-wide uppercase text-red-500/80 mb-2">Instant Demo Credentials</h4>
+        <div className="flex justify-around text-[11px] font-mono text-zinc-400">
+          <div>
+            <p className="font-bold text-white uppercase tracking-wider mb-1">Admin Portal</p>
+            <p>Passcode: <span className="text-emerald-400 font-bold">7277</span></p>
+          </div>
+          <div className="border-l border-zinc-800 mx-2" />
+          <div>
+            <p className="font-bold text-white uppercase tracking-wider mb-1">Employee Portal</p>
+            <p>User: <span className="text-emerald-400">user</span></p>
+            <p>Pass: <span className="text-emerald-400 font-bold">userpassword</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
